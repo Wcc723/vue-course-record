@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^4.1.1",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.3",
     "vue": "^2.5.2",
     "vue-axios": "^2.1.1",
     "vue-router": "^3.0.1"
