@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <div class="text-right mt-4">
       <button class="btn btn-primary"
         @click="openModal(true)">
@@ -66,7 +67,7 @@
                 </div>
                 <div class="form-group">
                   <label for="customFile">或 上傳圖片
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                   </label>
                   <input type="file" id="customFile" class="form-control"
                     ref="files" @change="uploadFile">
@@ -181,15 +182,21 @@ export default {
       products: [],
       tempProduct: {},
       isNew: false,
+      isLoading: false,
+      status: {
+        fileUploading: false,
+      },
     };
   },
   methods: {
     getProducts() {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products`; // 'http://localhost:3000/api/casper/products';
       const vm = this;
-      console.log(process.env.APIPATH, process.env.CUSTOMPATH);
+      console.log(process.env.APIisLoadingPATH, process.env.CUSTOMPATH);
+      vm.isLoading = true;
       this.$http.get(api).then((response) => {
         console.log(response.data);
+        vm.isLoading = false;
         vm.products = response.data.products;
       });
     },
@@ -247,12 +254,14 @@ export default {
       const formData = new FormData();
       formData.append('file-to-upload', uploadedFile);
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`;
+      vm.status.fileUploading = true;
       this.$http.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }).then((response) => {
         console.log(response.data);
+        vm.status.fileUploading = false;
         if (response.data.success) {
           // vm.tempProduct.imageUrl = response.data.imageUrl;
           // console.log(vm.tempProduct);
