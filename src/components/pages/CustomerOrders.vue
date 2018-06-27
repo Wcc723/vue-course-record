@@ -75,7 +75,7 @@
       </div>
     </div>
     <div class="my-5 row justify-content-center">
-      <div class="my-5 row justify-content-center">
+      <div class="col-md-6">
         <table class="table">
           <thead>
             <th></th>
@@ -120,8 +120,9 @@
             </button>
           </div>
         </div>
-
       </div>
+
+
     </div>
   </div>
 </template>
